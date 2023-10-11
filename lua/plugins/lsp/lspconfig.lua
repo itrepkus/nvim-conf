@@ -88,12 +88,6 @@ return {
       on_attach = on_attach,
     })
 
-    -- configure tailwindcss server
-    lspconfig["tailwindcss"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
     -- configure svelte server
     lspconfig["svelte"].setup({
       capabilities = capabilities,
@@ -131,8 +125,20 @@ return {
       filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
     })
 
+    -- configure salt_ls server
+    lspconfig["salt_ls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
     -- configure python server
     lspconfig["pyright"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- configure python server
+    lspconfig["ruby_ls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
