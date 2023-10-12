@@ -105,12 +105,6 @@ return {
       end,
     })
 
-    -- configure prisma orm server
-    lspconfig["prismals"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
     -- configure graphql language server
     lspconfig["graphql"].setup({
       capabilities = capabilities,
@@ -118,15 +112,8 @@ return {
       filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
     })
 
-    -- configure emmet language server
-    lspconfig["emmet_ls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-    })
-
-    -- configure salt_ls server
-    lspconfig["salt_ls"].setup({
+    -- configure solargraph server
+    lspconfig["solargraph"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
@@ -139,6 +126,19 @@ return {
 
     -- configure python server
     lspconfig["ruby_ls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "eruby" },
+    })
+
+    -- configure bash server
+    lspconfig["bash-language-server"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- configure shellcheck server
+    lspconfig["shellcheck"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
