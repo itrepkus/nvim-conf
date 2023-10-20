@@ -124,7 +124,7 @@ return {
       on_attach = on_attach,
     })
 
-    -- configure python server
+    -- configure ruby server
     lspconfig["ruby_ls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
@@ -132,13 +132,7 @@ return {
     })
 
     -- configure bash server
-    lspconfig["bash-language-server"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    -- configure shellcheck server
-    lspconfig["shellcheck"].setup({
+    lspconfig["bashls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
     })
