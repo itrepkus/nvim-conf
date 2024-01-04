@@ -105,6 +105,13 @@ return {
       end,
     })
 
+    -- configure go language server
+    lspconfig["gopls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "go"},
+    })
+
     -- configure graphql language server
     lspconfig["graphql"].setup({
       capabilities = capabilities,
