@@ -119,12 +119,6 @@ return {
       filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
     })
 
-    -- configure solargraph server
-    lspconfig["solargraph"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
     -- configure python server
     lspconfig["pyright"].setup({
       capabilities = capabilities,
@@ -138,6 +132,12 @@ return {
       filetypes = { "eruby" },
     })
 
+    -- configure ruby server
+    lspconfig["rubocop"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "eruby" },
+    })
     -- configure bash server
     lspconfig["bashls"].setup({
       capabilities = capabilities,
