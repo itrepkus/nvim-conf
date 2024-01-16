@@ -21,7 +21,7 @@ local M = {
         autopairs = { enable = true },
         autotag = { enable = true },
         indent = { enable = true },
-        ensure_installed = { "rust", "vim", "go", "lua" },
+        ensure_installed = { "maintained" },
         sync_install = true,
         ignore_install = {}, -- List of parsers to ignore installation
         refactor = {
