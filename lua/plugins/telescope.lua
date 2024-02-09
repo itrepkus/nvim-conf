@@ -20,7 +20,9 @@ local M = {
 		local theme = require("telescope.themes")
 		return {
 			pickers = {
-				find_files = { hidden = true },
+				find_files = {
+                    find_command = {"rg", "--ignore", "--hidden", "-L", "--files"},
+                },
 				live_grep = {
 					additional_args = function(opts)
 						return { "--hidden" }

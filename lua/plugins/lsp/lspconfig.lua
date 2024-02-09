@@ -129,14 +129,14 @@ return {
     lspconfig["ruby_ls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      filetypes = { "eruby" },
+      filetypes = { "ruby" },
     })
 
     -- configure ruby server
     lspconfig["rubocop"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
-      filetypes = { "eruby" },
+      filetypes = { "eruby", "ruby" },
     })
     -- configure bash server
     lspconfig["bashls"].setup({
