@@ -27,7 +27,7 @@ return {
         "docker_compose_language_service",
         "gopls",
         "lua_ls",
-        "ruby_ls",
+        "ruby_lsp",
         "terraformls",
         "yamlls",
     },
