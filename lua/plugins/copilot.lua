@@ -6,14 +6,15 @@ return {
     config = function ()
         require("copilot").setup({
             panel = {
-                enabled = true,
+                enabled = false,
                 auto_refresh = true
             },
+            suggestion = { enabled = false },
             filetypes = {
                 ["*"] = true,
             }
         })
-
     end,
         cmd = "Copilot",
+        event = "InsertEnter",
 }
