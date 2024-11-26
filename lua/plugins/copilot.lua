@@ -6,10 +6,10 @@ return {
     config = function ()
         require("copilot").setup({
             panel = {
-                enabled = false,
+                enabled = true,
                 auto_refresh = true
             },
-            suggestion = { enabled = false },
+            suggestion = { enabled = true },
             filetypes = {
                 ["*"] = true,
             }

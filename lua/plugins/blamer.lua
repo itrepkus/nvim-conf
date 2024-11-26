@@ -1,3 +1,6 @@
 return {
-    "APZelos/blamer.nvim"
+    "APZelos/blamer.nvim",
+    keys = {
+    {"<leader>bl", "<cmd>BlamerToggle<CR>", desc = "Toggle Blame"},
+  },
 }
