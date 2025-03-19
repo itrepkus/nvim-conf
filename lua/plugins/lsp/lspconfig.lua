@@ -9,7 +9,6 @@ return {
   },
   config = function()
     -- import cmp-nvim-lsp plugin
-    local cmp = require("cmp")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local capabilities = vim.tbl_deep_extend(
       "force",
@@ -29,27 +28,38 @@ return {
         "lua_ls",
         "terraformls",
         "yamlls",
-    },
+      },
       handlers = {
         function(server_name)
-
           require("lspconfig")[server_name].setup {
             capabilities = capabilities,
           }
         end,
 
-      ["solargraph"] = function ()
-        local lspconfig = require("lspconfig")
-        lspconfig.solargraph.setup {
-          capabilities = capabilities,
-        }
-      end,
-      },
-      settings = {
-        Lua = {
-          diagnostics = { globals = {'vim'} }
-        },
-      },
+        ["solargraph"] = function ()
+          local lspconfig = require("lspconfig")
+          lspconfig.solargraph.setup {
+            settings = {
+              solargraph = {
+                diagnostics = true
+              }
+            }
+          }
+        end,
+
+        ["lua_ls"] = function ()
+          local lspconfig = require("lspconfig")
+          lspconfig.lua_ls.setup {
+            settings = {
+              Lua = {
+                diagnostics = {
+                  globals = {"vim"}
+                }
+              }
+            }
+          }
+        end
+      }
     })
   end
 }
