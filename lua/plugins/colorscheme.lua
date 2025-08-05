@@ -1,4 +1,4 @@
-local M = {
+return {
 	"folke/tokyonight.nvim",
 	lazy = false,
 	priority = 1000,
@@ -12,5 +12,3 @@ local M = {
 		tokyonight.load()
 	end,
 }
-
-return M

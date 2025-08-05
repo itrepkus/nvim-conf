@@ -1,4 +1,4 @@
-local M = {
+return {
 	"nvim-telescope/telescope.nvim",
 	event = "BufReadPre",
 	dependencies = {
@@ -50,5 +50,3 @@ local M = {
 		}
 	end,
 }
-
-return M
