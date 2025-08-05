@@ -28,3 +28,20 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "100"
 
+-- Diagnostic configuration (modern approach)
+vim.diagnostic.config({
+  virtual_text = true,        -- Show diagnostic messages inline
+  signs = {
+    active = true,
+    values = {
+      { name = "DiagnosticSignError", text = " " },
+      { name = "DiagnosticSignWarn", text = " " },
+      { name = "DiagnosticSignHint", text = " " },
+      { name = "DiagnosticSignInfo", text = " " },
+    },
+  },
+  underline = true,           -- Underline the text with the diagnostic
+  update_in_insert = false,  -- Don't update diagnostics while typing
+  severity_sort = true,      -- Sort diagnostics by severity
+})
+

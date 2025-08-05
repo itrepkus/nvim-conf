@@ -12,3 +12,9 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("v", "<leader>y", '"+y')
 
 vim.keymap.set("n", "<leader>lz", ":Lazy<cr>")
+
+-- Diagnostic keymaps
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic error messages" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
