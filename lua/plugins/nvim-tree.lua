@@ -7,6 +7,14 @@ return {
     },
     keys={{"<leader>pt", "<cmd>NvimTreeToggle<cr>", desc = "Toggle tree"},},
     config = function()
-        require("nvim-tree").setup {}
+        -- Fix for FileExplorer error - disable netrw completely
+        vim.g.loaded_netrw = 1
+        vim.g.loaded_netrwPlugin = 1
+        
+        require("nvim-tree").setup {
+            -- Disable the FileExplorer integration that causes errors
+            disable_netrw = true,
+            hijack_netrw = false,
+        }
     end
 }

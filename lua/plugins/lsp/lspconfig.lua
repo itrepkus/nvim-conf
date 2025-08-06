@@ -8,8 +8,12 @@ return {
     "j-hui/fidget.nvim"
   },
   config = function()
-    -- import cmp-nvim-lsp plugin
+    -- Import required modules
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    local lspconfig = require("lspconfig")
+    local lsp_remap = require("ignas.lsp_remap")
+
+    -- Setup capabilities with completion support
     local capabilities = vim.tbl_deep_extend(
       "force",
       {},
@@ -18,89 +22,68 @@ return {
     )
 
     -- Get the on_attach function from lsp_remap
-    local lsp_remap = require("ignas.lsp_remap")
     local on_attach = lsp_remap.on_attach
 
+    -- Initialize UI components
     require("fidget").setup()
     require("mason").setup()
-    require("mason-lspconfig").setup({
-      ensure_installed = {
-        "bashls",
-        "dockerls",
-        "docker_compose_language_service",
-        "gopls",
-        "lua_ls",
-        "terraformls",
-        "yamlls",
-        "solargraph",
+
+    -- Define LSP servers to auto-install
+    local servers = {
+      "bashls",
+      "dockerls", 
+      "docker_compose_language_service",
+      "gopls",
+      "lua_ls",
+      "terraformls",
+      "yamlls",
+    }
+
+    -- Custom server configurations
+    local server_configs = {
+      -- Go language server with enhanced settings
+      gopls = {
+        settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+              shadow = true,
+            },
+            staticcheck = true,
+            gofumpt = true,
+            usePlaceholders = true,
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+          },
+        },
       },
+    }
+
+    -- Setup Mason LSP configuration
+    require("mason-lspconfig").setup({
+      ensure_installed = servers,
       handlers = {
         -- Default handler for most servers
         function(server_name)
-          local ok, lspconfig = pcall(require, "lspconfig")
-          if not ok then
-            vim.notify("Failed to load lspconfig", vim.log.levels.ERROR)
-            return
-          end
+          local config = server_configs[server_name] or {}
+          config.capabilities = capabilities
+          config.on_attach = on_attach
 
-          local ok, server = pcall(lspconfig[server_name].setup, {
-            capabilities = capabilities,
-            on_attach = on_attach,
-          })
+          local ok, _ = pcall(lspconfig[server_name].setup, config)
           if not ok then
             vim.notify("Failed to setup " .. server_name, vim.log.levels.ERROR)
           end
         end,
-
-        -- Custom handlers for specific servers
-        ["solargraph"] = function()
-          local lspconfig = require("lspconfig")
-          lspconfig.solargraph.setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = {
-              solargraph = {
-                diagnostics = true,
-                useBundler = true,
-                checkGemVersion = false,
-              }
-            },
-          })
-        end,
-
-        ["gopls"] = function()
-          local lspconfig = require("lspconfig")
-          lspconfig.gopls.setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = {
-              gopls = {
-                analyses = {
-                  unusedparams = true,
-                  shadow = true,
-                },
-                staticcheck = true,
-                gofumpt = true,
-                usePlaceholders = true,
-                hints = {
-                  assignVariableTypes = true,
-                  compositeLiteralFields = true,
-                  compositeLiteralTypes = true,
-                  functionTypeParameters = true,
-                  parameterNames = true,
-                  rangeVariableTypes = true,
-                },
-              },
-            },
-          })
-        end,
       }
     })
 
-    -- Set up lua_ls separately to ensure our settings are applied
-    -- Note: .luarc.json file will handle the globals configuration
-    local lspconfig = require("lspconfig")
-    
+    -- Setup Lua LSP with custom configuration
     lspconfig.lua_ls.setup({
       capabilities = capabilities,
       on_attach = on_attach,
@@ -116,5 +99,25 @@ return {
         }
       },
     })
+
+    -- Configure Ruby LSP server manually (not through Mason)
+    -- Using only rubocop as the default Ruby LSP as preferred
+    -- Temporarily disabled due to LSP errors - using null-ls instead
+    -- lspconfig.rubocop.setup({
+    --   capabilities = capabilities,
+    --   on_attach = on_attach,
+    --   -- Use bundle exec if available, otherwise fallback to system
+    --   cmd = function()
+    --     if vim.fn.filereadable("Gemfile") == 1 and vim.fn.filereadable("Gemfile.lock") == 1 then
+    --       return { "bundle", "exec", "rubocop", "lsp" }
+    --     end
+    --     return { "rubocop", "lsp" }
+    --   end,
+    --   -- Add error handling to prevent LSP crashes
+    --   init_options = {
+    --     -- Suppress configuration warnings
+    --     suppressConfigWarnings = true,
+    --   },
+    -- })
   end
 }
