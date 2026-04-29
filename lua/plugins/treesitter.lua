@@ -43,5 +43,27 @@ return {
     }
 
     vim.treesitter.language.register("templ", "templ")
+
+    -- Neovim 0.12 changed treesitter query-match shape: `match[id]` is now a
+    -- list of TSNodes instead of a single node. nvim-treesitter's master
+    -- branch is archived and won't be patched, so re-register the directive
+    -- used by the markdown injection query (fenced code-block language
+    -- detection) to handle both shapes. Without this, opening any .md file
+    -- spams `decor_provider_error: attempt to call method 'range'` in
+    -- ~/.local/state/nvim/nvim.log.
+    local alias_map = {
+      ex = "elixir", pl = "perl", sh = "bash", uxn = "uxntal", ts = "typescript",
+    }
+    pcall(vim.treesitter.query.add_directive, "set-lang-from-info-string!",
+      function(match, _, bufnr, pred, metadata)
+        local node = match[pred[2]]
+        if type(node) == "table" then node = node[#node] end
+        if not node then return end
+        local alias = vim.treesitter.get_node_text(node, bufnr):lower()
+        local ft = vim.filetype.match({ filename = "a." .. alias })
+        metadata["injection.language"] = ft or alias_map[alias] or alias
+      end,
+      { force = true, all = false }
+    )
   end
 }

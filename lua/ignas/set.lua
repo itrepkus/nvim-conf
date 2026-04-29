@@ -1,3 +1,9 @@
+-- Disable unused providers to silence healthcheck warnings
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
@@ -30,18 +36,17 @@ vim.opt.colorcolumn = "100"
 
 -- Diagnostic configuration (modern approach)
 vim.diagnostic.config({
-  virtual_text = true,        -- Show diagnostic messages inline
+  virtual_text = true,
   signs = {
-    active = true,
-    values = {
-      { name = "DiagnosticSignError", text = " " },
-      { name = "DiagnosticSignWarn", text = " " },
-      { name = "DiagnosticSignHint", text = " " },
-      { name = "DiagnosticSignInfo", text = " " },
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
     },
   },
-  underline = true,           -- Underline the text with the diagnostic
-  update_in_insert = false,  -- Don't update diagnostics while typing
-  severity_sort = true,      -- Sort diagnostics by severity
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
 })
 
